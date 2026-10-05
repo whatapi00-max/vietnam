@@ -276,6 +276,22 @@ function cleanHtml(h, rel) {
   h = h.replace(/A growing number of German and European industrial firms/g, 'A growing number of international industrial firms');
   h = h.replace(/investors from Germany, Japan, Korea, Australia, or the US/g, 'investors from treaty countries');
   h = h.replace(/For German and other European investors/g, 'For international investors');
+
+  // --- remove office address ---
+  h = h.replace(/<p[^>]*>The Sun Avenue, Tower 1, Unit SAV1\.02\.11<br>28 Mai Chi Tho Street, Binh Trung Ward<br>Ho Chi Minh City, Vietnam<\/p>/g, '');
+  h = h.replace(/Unit SAV1\.02\.11, Tower 1, The Sun Avenue, 28 Mai Chi Tho Street, Binh Trung Ward, Ho Chi Minh City(, Vietnam)?/g, 'Ho Chi Minh City, Vietnam');
+  h = h.replace(/— Ho Chi Minh City, Vietnam\./g, 'in Ho Chi Minh City, Vietnam.');
+  h = h.replace(/, Ho Chi Minh City, Vietnam, Ho Chi Minh City/g, ', Ho Chi Minh City');
+  h = h.replace(/(Unit SAV1\.02\.11,? )?(Tower 1, )?The Sun Avenue,? ?/g, '');
+  h = h.replace(/28 Mai Chi Tho Street, Binh Trung Ward,?/g, '');
+  h = h.replace(/<br\s*\/?>\s*(?=Ho Chi Minh City)|Ho Chi Minh City, Vietnam<br\s*\/?>\s*<\/p>/g, '');
+
+  // --- new contact email ---
+  h = h.replace(/vietoriabusinessservices@gmail\.com/g, 'tthservices.info@gmail.com');
+  // contact page Office block (address + map link)
+  if (/contact[\/\\]index\.html$/.test(rel)) {
+    h = h.replace(/<div style="display:grid;gap:14px">\s*<p[^>]*>Office<\/p>[\s\S]*?<\/div>/, '');
+  }
   return h;
 }
 

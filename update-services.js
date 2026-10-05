@@ -121,9 +121,10 @@ for (const f of walk(SITE)) {
 
   // 3) contact details from flyer
   const before = h;
-  h = h.replace(/vietnam@ecovislaw\.vn/g, 'vietoriabusinessservices@gmail.com')
-       .replace(/quynh\.vu@ecovislaw\.vn/g, 'vietoriabusinessservices@gmail.com')
-       .replace(/christine\.chou@ecovis\.com/g, 'vietoriabusinessservices@gmail.com')
+  h = h.replace(/vietnam@ecovislaw\.vn/g, 'tthservices.info@gmail.com')
+       .replace(/quynh\.vu@ecovislaw\.vn/g, 'tthservices.info@gmail.com')
+       .replace(/christine\.chou@ecovis\.com/g, 'tthservices.info@gmail.com')
+       .replace(/vietoriabusinessservices@gmail\.com/g, 'tthservices.info@gmail.com')
        .replace(/tel:\+84898120121/g, 'tel:+84394430730')
        .replace(/\+84 898 120 121/g, '+84 394 430 730');
   if (h !== before) contacts++;
