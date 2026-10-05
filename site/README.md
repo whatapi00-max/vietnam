@@ -1,10 +1,10 @@
-# Vietoria — static site mirror
+# TTH — static site mirror
 
 A complete static mirror of ecovislaw.vn — **201 pages**, English only
 (the German `de/` section, German-language posts, German Desk page, and
 lawyer profile pages have been removed at the owner's request).
 
-Rebranded to **Vietoria** with a navy/gold theme matching the logo:
+Rebranded to **TTH** with a navy/gold theme matching the logo:
 navy `#10264A / #1F3B68 / #2F5A94`, gold `#D2A051 / #B08A2E`, warm
 neutrals `#F3F1E8` sections, `#E6E2D6` borders.
 
@@ -52,7 +52,7 @@ docker run -p 8080:80 ecovis-static
   the page. Wire it to a form endpoint if you need real submissions.
 - WordPress endpoints (search, feeds, wp-admin) and one URL that 404s
   on the live site are dead links (`#!`) — same behaviour as upstream.
-- Regenerate with `node mirror.js` from the parent folder — Vietoria
+- Regenerate with `node mirror.js` from the parent folder — TTH
   branding, the navy/gold theme, and the removed homepage service
   items are all reapplied automatically. `retheme.js` can re-apply the
   theme to the already-generated pages without re-fetching.

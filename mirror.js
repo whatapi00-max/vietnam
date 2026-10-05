@@ -132,32 +132,32 @@ function transformBody(src) {
   return body;
 }
 
-// ---- Vietoria rebrand (applied to every generated page) ----
+// ---- TTH rebrand (applied to every generated page) ----
 function rebrand(html) {
   html = html.replace(/(rel="icon"[^>]*href="(?:\.\.\/)*\/?assets\/img\/)ecovis-logo-red\.png/g, '$1tth-mark.png');
   html = html.replace(/<img src="((?:\.\.\/)*\/?assets\/img\/)ecovis-logo-red\.png"[^>]*>/g,
-    '<img src="$1tth-logo.png" alt="Vietoria" style="height:38px;width:auto;display:block">');
+    '<img src="$1tth-logo.png" alt="TTH" style="height:38px;width:auto;display:block">');
   html = html.replace(/<span style="font-size:19px;font-weight:400;color:#6B6E6F;padding-left:14px;border-left:1px solid #E3E3E5;white-space:nowrap">Vietnam Law<\/span>/g, '');
   html = html.replace(/<img src="((?:\.\.\/)*\/?assets\/img\/)ecovis-logo-white\.png"[^>]*>/g,
-    '<span style="display:inline-flex;background:#0A0A0A;border-radius:4px;padding:9px 14px"><img src="$1tth-logo.png" alt="Vietoria" style="height:30px;width:auto;display:block"></span>');
+    '<span style="display:inline-flex;background:#0A0A0A;border-radius:4px;padding:9px 14px"><img src="$1tth-logo.png" alt="TTH" style="height:30px;width:auto;display:block"></span>');
   html = html.replace(/<span style="font-size:16px;font-weight:400;color:rgba\(255,255,255,\.9\);padding-left:12px;border-left:1px solid rgba\(255,255,255,\.28\);white-space:nowrap">Vietnam Law<\/span>/g, '');
-  html = html.replace(/ECOVIS Vietnam Law/g, 'Vietoria');
-  html = html.replace(/ECOVIS Vietnam/g, 'Vietoria');
-  html = html.replace(/ECOVIS in Vietnam/g, 'Vietoria in Vietnam');
-  html = html.replace(/alt="ECOVIS"/g, 'alt="Vietoria"');
+  html = html.replace(/ECOVIS Vietnam Law/g, 'TTH');
+  html = html.replace(/ECOVIS Vietnam/g, 'TTH');
+  html = html.replace(/ECOVIS in Vietnam/g, 'TTH in Vietnam');
+  html = html.replace(/alt="ECOVIS"/g, 'alt="TTH"');
   // firm-specific leftovers (network refs kept intentionally)
   const R = [
-    [/— ECOVIS<\/title>/g, '— Vietoria</title>'], [/ - ECOVIS<\/title>/g, ' - Vietoria</title>'],
-    [/— ECOVIS (?=[A-Z])/g, '— Vietoria '], [/ECOVIS&hellip;/g, 'Vietoria&hellip;'],
-    [/>ECOVIS Solution/g, '>Vietoria Solution'], [/ECOVIS Practical Framework/g, 'Vietoria Practical Framework'],
-    [/ECOVIS practical framework/g, 'Vietoria practical framework'], [/ECOVIS risk-management/g, 'Vietoria risk-management'],
-    [/ECOVIS mean by/g, 'Vietoria mean by'], [/ECOVIS Advisory Angle/g, 'Vietoria Advisory Angle'],
-    [/ECOVIS continuity/g, 'Vietoria continuity'], [/ECOVIS clients?\?/g, 'Vietoria client?'],
-    [/ECOVIS offices in the issuing/g, 'Vietoria offices in the issuing'],
-    [/ECOVIS assist with factory setup/g, 'Vietoria assist with factory setup'],
-    [/ECOVIS advise on the commercial/g, 'Vietoria advise on the commercial'],
-    [/ECOVIS review a partner/g, 'Vietoria review a partner'], [/>ECOVIS can integrate/g, '>Vietoria can integrate'],
-    [/>ECOVIS provided/g, '>Vietoria provided'], [/ECOVIS attribution on the document/g, 'Vietoria attribution on the document'],
+    [/— ECOVIS<\/title>/g, '— TTH</title>'], [/ - ECOVIS<\/title>/g, ' - TTH</title>'],
+    [/— ECOVIS (?=[A-Z])/g, '— TTH '], [/ECOVIS&hellip;/g, 'TTH&hellip;'],
+    [/>ECOVIS Solution/g, '>TTH Solution'], [/ECOVIS Practical Framework/g, 'TTH Practical Framework'],
+    [/ECOVIS practical framework/g, 'TTH practical framework'], [/ECOVIS risk-management/g, 'TTH risk-management'],
+    [/ECOVIS mean by/g, 'TTH mean by'], [/ECOVIS Advisory Angle/g, 'TTH Advisory Angle'],
+    [/ECOVIS continuity/g, 'TTH continuity'], [/ECOVIS clients?\?/g, 'TTH client?'],
+    [/ECOVIS offices in the issuing/g, 'TTH offices in the issuing'],
+    [/ECOVIS assist with factory setup/g, 'TTH assist with factory setup'],
+    [/ECOVIS advise on the commercial/g, 'TTH advise on the commercial'],
+    [/ECOVIS review a partner/g, 'TTH review a partner'], [/>ECOVIS can integrate/g, '>TTH can integrate'],
+    [/>ECOVIS provided/g, '>TTH provided'], [/ECOVIS attribution on the document/g, 'TTH attribution on the document'],
   ];
   for (const [re, rep] of R) html = html.replace(re, rep);
   // drop requested service-card list items (homepage)
@@ -169,7 +169,7 @@ function rebrand(html) {
   return html;
 }
 
-// ---- Vietoria navy/gold theme (applied to every generated page) ----
+// ---- TTH navy/gold theme (applied to every generated page) ----
 function theme(html) {
   const NAVY_DEEP = '#10264A', NAVY = '#1F3B68', STEEL = '#2F5A94';
   const GOLD_DARK = '#B08A2E', GOLD = '#D2A051';
@@ -210,7 +210,7 @@ function pageHtml(lang, title, desc, body) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${rebrand(title || 'Vietoria')}</title>
+<title>${rebrand(title || 'TTH')}</title>
 ${desc ? `<meta name="description" content="${rebrand(desc)}">\n` : ''}<link rel="icon" type="image/png" href="/assets/img/tth-mark.png">
 <link rel="stylesheet" href="/assets/css/theme.css">
 <style>
@@ -313,10 +313,10 @@ async function downloadAssets() {
   console.log('wrote', pages.size, 'pages');
   if (failed.size) console.log('FAILED:', [...failed].join('\n'));
 
-  // apply Vietoria service categories + contact details to generated pages
+  // apply TTH service categories + contact details to generated pages
   require('./update-services.js');
   // remove German-language content + lawyer profile references
   require('./cleanup-de-lawyers.js');
-  // rebuild /services/ around the five Vietoria categories
+  // rebuild /services/ around the five TTH categories
   require('./fix-services-page.js');
 })();
