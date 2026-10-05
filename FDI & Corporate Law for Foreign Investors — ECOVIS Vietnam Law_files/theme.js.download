@@ -1,0 +1,138 @@
+/* ECOVIS Vietnam Law — progressive enhancement only. */
+(function () {
+	'use strict';
+
+	// Pages with a form are edge-cached; the ev_ts anti-bot timestamp printed
+	// server-side can be up to the cache TTL stale for whoever loads the
+	// cached copy. Overwrite it with the real load time so the time-trap in
+	// inc/spam.php measures actual elapsed time, not cache age.
+	document.querySelectorAll('[data-ev-ts]').forEach(function (el) {
+		el.value = Math.floor(Date.now() / 1000);
+	});
+
+	// Topic filters on the Insights and Knowledge Hub listings.
+	document.addEventListener('click', function (event) {
+		var button = event.target.closest('[data-ev-filter]');
+		if (!button) { return; }
+		event.preventDefault();
+		var value = button.getAttribute('data-ev-filter');
+		var scope = button.closest('[data-ev-filter-scope]') || document;
+
+		scope.querySelectorAll('[data-ev-filter]').forEach(function (el) {
+			var on = el === button;
+			el.setAttribute('aria-pressed', on ? 'true' : 'false');
+			el.style.background = on ? '#C6093B' : '#fff';
+			el.style.color = on ? '#fff' : '#383A3B';
+			el.style.borderColor = on ? '#C6093B' : '#D8D9DB';
+		});
+
+		scope.querySelectorAll('[data-ev-topic]').forEach(function (card) {
+			var match = value === 'all' || card.getAttribute('data-ev-topic') === value;
+			card.style.display = match ? '' : 'none';
+		});
+	});
+
+	// Move focus to the confirmation notice after a form round trip.
+	var notice = document.querySelector('.ev-notice');
+	if (notice) { notice.setAttribute('tabindex', '-1'); notice.focus({ preventScroll: true }); }
+
+	// Mobile primary nav: toggle panel, sync icon/aria state, close on Escape or outside click.
+	var navToggle = document.querySelector('[data-ci-nav-toggle]');
+	var nav = document.getElementById('ci-primary-nav');
+	if (navToggle && nav) {
+		var iconOpen = navToggle.querySelector('[data-ci-nav-icon-open]');
+		var iconClose = navToggle.querySelector('[data-ci-nav-icon-close]');
+		var setNavOpen = function (open) {
+			nav.classList.toggle('is-open', open);
+			navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+			if (iconOpen) { iconOpen.style.display = open ? 'none' : ''; }
+			if (iconClose) { iconClose.style.display = open ? '' : 'none'; }
+		};
+		navToggle.addEventListener('click', function () {
+			setNavOpen(!nav.classList.contains('is-open'));
+		});
+		document.addEventListener('keydown', function (event) {
+			if (event.key === 'Escape' && nav.classList.contains('is-open')) { setNavOpen(false); navToggle.focus(); }
+		});
+		document.addEventListener('click', function (event) {
+			if (!nav.classList.contains('is-open')) { return; }
+			if (nav.contains(event.target) || navToggle.contains(event.target)) { return; }
+			setNavOpen(false);
+		});
+	}
+
+	// Stat grids (data-ci-grid="stats" — homepage, /about/, German Desk,
+	// pillar pages): count numeric values up from 0 and fade the whole row in
+	// together the first time it scrolls into view, so the network numbers
+	// read as alive rather than sitting there as static print. A value with
+	// no digit at all (e.g. "HCMC") still gets the fade/rise so the row moves
+	// as one group, it just doesn't count.
+	var statGrids = document.querySelectorAll('[data-ci-grid="stats"]');
+	if (statGrids.length) {
+		var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+		var animateCount = function (el) {
+			var raw = el.textContent.trim();
+			var m = raw.match(/^(\D*)([\d,.]*\d)(\D*)$/);
+			if (!m) { return; }
+			var prefix = m[1], numStr = m[2], suffix = m[3];
+			var target = parseFloat(numStr.replace(/,/g, ''));
+			if (!isFinite(target)) { return; }
+			var hasComma = numStr.indexOf(',') !== -1;
+			var decimals = (numStr.split('.')[1] || '').length;
+			var duration = 1100;
+			var startTime = null;
+
+			var format = function (n) {
+				var s = decimals ? n.toFixed(decimals) : String(Math.round(n));
+				if (hasComma) {
+					var parts = s.split('.');
+					parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+					s = parts.join('.');
+				}
+				return prefix + s + suffix;
+			};
+
+			el.textContent = format(0);
+			var step = function (ts) {
+				if (startTime === null) { startTime = ts; }
+				var progress = Math.min((ts - startTime) / duration, 1);
+				var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic — fast start, gentle settle
+				el.textContent = format(target * eased);
+				if (progress < 1) { requestAnimationFrame(step); }
+			};
+			requestAnimationFrame(step);
+		};
+
+		if ('IntersectionObserver' in window) {
+			var revealGrid = function (grid) {
+				var boxes = grid.children;
+				Array.prototype.forEach.call(boxes, function (box, i) {
+					var numberEl = box.querySelector(':scope > span:first-child');
+					if (!reduceMotion) {
+						box.style.opacity = '0';
+						box.style.transform = 'translateY(10px)';
+						box.style.transition = 'opacity 480ms ease-out ' + (i * 90) + 'ms, transform 480ms ease-out ' + (i * 90) + 'ms';
+						requestAnimationFrame(function () {
+							requestAnimationFrame(function () {
+								box.style.opacity = '';
+								box.style.transform = '';
+							});
+						});
+					}
+					if (numberEl && /\d/.test(numberEl.textContent) && !reduceMotion) {
+						setTimeout(function () { animateCount(numberEl); }, i * 90);
+					}
+				});
+			};
+			var statObserver = new IntersectionObserver(function (entries, obs) {
+				entries.forEach(function (entry) {
+					if (!entry.isIntersecting) { return; }
+					revealGrid(entry.target);
+					obs.unobserve(entry.target);
+				});
+			}, { threshold: 0.35 });
+			statGrids.forEach(function (grid) { statObserver.observe(grid); });
+		}
+	}
+}());

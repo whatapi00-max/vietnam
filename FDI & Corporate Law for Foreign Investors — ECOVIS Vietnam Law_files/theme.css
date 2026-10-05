@@ -1,0 +1,389 @@
+  /* Backstop against sideways scroll on narrow viewports — a third-party widget (reCAPTCHA badge) doesn't fully respect the viewport width on some mobile browsers even when repositioned below. */
+  html, body { overflow-x: hidden; }
+  body { margin: 0; background: #fff; color: #383A3B; font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; font-size: 16px; line-height: 1.333; -webkit-font-smoothing: antialiased; }
+  /* reCAPTCHA's fixed 256px badge sits at right:-186px (mostly off-screen by design) and is wider than narrow viewports, forcing page-wide horizontal scroll (which also stretches the mobile nav panel, sized off the same overflowed viewport). Google's own script re-applies inline styles, so only !important survives. Scale + reposition instead of hiding — Google's terms require the badge to stay visible. */
+  @media (max-width: 390px) { .grecaptcha-badge { right: 4px !important; transform: scale(.8) !important; transform-origin: bottom right !important; } }
+  h1, h2, h3, h4, p { margin: 0; }
+  a { color: #C6093B; }
+  a:hover { color: #8C0550; }
+  /* Form fields have no design-measured outer width; a <select> sizes to its widest option and overflows its grid cell without box-sizing: border-box + width: 100%. Scoped here only — see CLAUDE.md §2. */
+  [data-ev-form] input:not([type="checkbox"]), [data-ev-form] select, [data-ev-form] textarea { box-sizing: border-box; width: 100%; }
+  /* Keyboard-only focus ring for links, buttons and other interactive elements — outline takes no box-model space, so no layout impact. WCAG 2.4.7. */
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible, summary:focus-visible { outline: 3px solid #C6093B; outline-offset: 2px; }
+  /* The one rule that cannot be inline: the signature mosaic bar reveals on card hover. */
+  [data-ci-card] [data-ci-bar] { transform: scaleX(0); transform-origin: left center; transition: transform 320ms cubic-bezier(.22,.61,.36,1); }
+  [data-ci-card]:hover [data-ci-bar], [data-ci-card]:focus-within [data-ci-bar] { transform: scaleX(1); }
+  [data-ci-card] { transition: box-shadow 320ms cubic-bezier(.22,.61,.36,1); }
+  [data-ci-card]:hover { box-shadow: 0 2px 4px rgba(56,58,59,.06), 0 16px 32px -14px rgba(56,58,59,.20); }
+  @media (prefers-reduced-motion: reduce) { [data-ci-card], [data-ci-card] [data-ci-bar], a[style*="min-height:88px"], [data-hv], [data-hv="hv12"]::before, a[style*="padding:14px 24px;background:#fff;color:#C6093B"], a[style*="justify-self:start;margin-top:4px"], button[onclick=""], nav[aria-label="Insights pagination"] a { transition: none; } }
+  /* Responsive: media queries cannot be expressed inline. Mirrors style.css. */
+  [data-ci-brand] { white-space: nowrap; }
+  @media (max-width: 1180px) {
+    [data-ci-journey] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; row-gap: 44px !important; }
+    [data-ci-journey-rail] { display: none !important; }
+    [data-ci-logos] { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+  }
+  /* Primary nav collapses into a toggled panel below this width; see theme.js for the open/close behaviour. */
+  @media (max-width: 900px) {
+    [data-ci-nav-toggle] { display: inline-flex !important; }
+    [data-ci-nav] {
+      display: flex !important; flex-direction: column !important; align-items: stretch !important; gap: 4px !important;
+      position: absolute; top: 100%; left: 0; right: 0; z-index: 60;
+      background: #fff; border-bottom: 1px solid #E3E3E5; box-shadow: 0 12px 20px -8px rgba(56,58,59,.16);
+      padding: 8px 24px 20px; font-size: 17px !important;
+      opacity: 0; visibility: hidden; transform: translateY(-8px);
+      transition: opacity 200ms cubic-bezier(.22,.61,.36,1), transform 200ms cubic-bezier(.22,.61,.36,1), visibility 0s linear 200ms;
+    }
+    [data-ci-nav].is-open {
+      opacity: 1; visibility: visible; transform: translateY(0);
+      transition: opacity 200ms cubic-bezier(.22,.61,.36,1), transform 200ms cubic-bezier(.22,.61,.36,1), visibility 0s linear 0s;
+    }
+    @media (prefers-reduced-motion: reduce) { [data-ci-nav] { transition: none; } }
+    [data-ci-nav] a { padding: 13px 2px; border-bottom: 1px solid #F1F1F2; white-space: normal !important; }
+    [data-ci-nav] a[data-hv="hv-cta"] { border-bottom: none; text-align: center; margin-top: 10px; }
+    [data-ci-nav] > span { margin-left: 0 !important; border-left: none !important; padding-left: 2px !important; padding-top: 6px; }
+  }
+  @media (max-width: 720px) {
+    [data-ci-logos] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  }
+  details > summary::-webkit-details-marker { display: none; }
+  @media (max-width: 1024px) {
+    [data-ci-grid="4"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    [data-ci-grid="stats"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  }
+  @media (max-width: 960px) {
+    [data-ci-split] { grid-template-columns: minmax(0,1fr) !important; gap: 40px !important; }
+    [data-ci-grid="3"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    [data-ci-hero-box] { min-height: 500px !important; }
+    [data-ci-hero-box] > div:last-child { padding-top: 88px !important; padding-bottom: 32px !important; }
+    [data-ci-hero-box] h1 { font-size: 40px !important; max-width: none !important; }
+    [data-ci-hero-box] img { object-position: 68% 30% !important; }
+  }
+  @media (max-width: 860px) {
+    [data-ci-pillars] { grid-template-columns: minmax(0,1fr) !important; }
+    [data-ci-cta] { grid-template-columns: minmax(0,1fr) !important; padding: 40px 28px !important; }
+    [data-ci-footer-cols] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 32px !important; }
+    section:not([data-ci-hero-box]) { padding-top: 56px !important; padding-bottom: 56px !important; }
+  }
+  @media (max-width: 640px) {
+    [data-ci-grid="2"], [data-ci-grid="3"], [data-ci-grid="4"] { grid-template-columns: minmax(0,1fr) !important; }
+    [data-ci-grid="stats"] { grid-template-columns: minmax(0,1fr) !important; }
+    [data-ci-footer-cols] { grid-template-columns: minmax(0,1fr) !important; }
+    [data-ci-journey] { grid-template-columns: minmax(0,1fr) !important; }
+    [data-ci-hero-box] { min-height: 440px !important; }
+    [data-ci-hero-box] h1 { font-size: 32px !important; }
+    [data-ci-hero-box] [data-ci-hero-lead] { font-size: 18px !important; }
+    main h2 { font-size: 30px !important; }
+  }
+
+/* page-specific */
+  body { margin: 0; background: #fff; color: #383A3B; font-family: 'Noto Sans', -apple-system, 'Segoe UI', Arial, sans-serif; font-size: 16px; line-height: 1.333; -webkit-font-smoothing: antialiased; }
+  @media (min-width: 961px) { [data-ci-quote-copy] { padding-left: 0; } }
+  @media (max-width: 1024px) { [data-ci-grid="4"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; } [data-ci-grid="stats"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; } }
+  @media (max-width: 960px) { [data-ci-split] { grid-template-columns: minmax(0,1fr) !important; gap: 40px !important; } [data-ci-grid="3"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; } [data-ci-hero-box] h1 { font-size: 40px !important; } }
+  @media (max-width: 860px) { [data-ci-cta] { grid-template-columns: minmax(0,1fr) !important; padding: 40px 28px !important; } section { padding-top: 56px !important; padding-bottom: 56px !important; } }
+  @media (max-width: 640px) { [data-ci-grid="2"], [data-ci-grid="3"], [data-ci-grid="4"], [data-ci-grid="stats"] { grid-template-columns: minmax(0,1fr) !important; } main h2 { font-size: 30px !important; } [data-ci-hero-box] h1 { font-size: 32px !important; } }
+  @media (max-width: 1024px) { [data-ci-grid="4"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; } }
+  @media (max-width: 960px) { [data-ci-split] { grid-template-columns: minmax(0,1fr) !important; gap: 40px !important; } [data-ci-grid="3"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; } h1 { font-size: 40px !important; } }
+  @media (max-width: 640px) { [data-ci-grid="2"], [data-ci-grid="3"], [data-ci-grid="4"] { grid-template-columns: minmax(0,1fr) !important; } main h2 { font-size: 30px !important; } h1 { font-size: 32px !important; } }
+  @media (max-width: 1100px) { [data-ci-doc] { grid-template-columns: minmax(0,1fr) !important; gap: 48px !important; } [data-ci-aside] { position: static !important; } }
+  @media (max-width: 960px) { [data-ci-split] { grid-template-columns: minmax(0,1fr) !important; gap: 40px !important; } [data-ci-grid="3"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; } h1 { font-size: 38px !important; } }
+  @media (max-width: 860px) { [data-ci-cta] { grid-template-columns: minmax(0,1fr) !important; padding: 40px 28px !important; } }
+  @media (max-width: 640px) { [data-ci-grid="2"], [data-ci-grid="3"], [data-ci-grid="4"] { grid-template-columns: minmax(0,1fr) !important; } h2 { font-size: 28px !important; } h1 { font-size: 32px !important; } }
+  @media (max-width: 640px) { [data-ci-grid="2"], [data-ci-grid="3"], [data-ci-grid="4"] { grid-template-columns: minmax(0,1fr) !important; } main h2 { font-size: 30px !important; } h1 { font-size: 32px !important; } [data-ci-matter] { grid-template-columns: minmax(0,1fr) !important; } }
+  @media (max-width: 960px) { [data-ci-split] { grid-template-columns: minmax(0,1fr) !important; gap: 40px !important; } [data-ci-grid="3"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; } h1 { font-size: 40px !important; } [data-ci-feature] { grid-template-columns: minmax(0,1fr) !important; } }
+  @media (max-width: 640px) { [data-ci-grid="2"], [data-ci-grid="3"] { grid-template-columns: minmax(0,1fr) !important; } main h2 { font-size: 30px !important; } h1 { font-size: 32px !important; } }
+  @media (max-width: 640px) { [data-ci-grid="2"], [data-ci-grid="3"], [data-ci-grid="4"], [data-ci-grid="stats"] { grid-template-columns: minmax(0,1fr) !important; } main h2 { font-size: 28px !important; } h1 { font-size: 30px !important; } }
+  [data-ci-photo] { filter: grayscale(1) contrast(1.05) brightness(1.02); background: #EAEBED; transition: filter 420ms cubic-bezier(.22,.61,.36,1); }
+  [data-ci-card]:hover [data-ci-photo] { filter: grayscale(.35) contrast(1.03) brightness(1.02) saturate(.95); }
+  @media (max-width: 960px) { [data-ci-split] { grid-template-columns: minmax(0,1fr) !important; gap: 40px !important; } [data-ci-grid="3"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; } h1 { font-size: 40px !important; } [data-ci-lead] { grid-template-columns: minmax(0,1fr) !important; } }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: #C6093B; box-shadow: 0 0 0 3px rgba(198,9,59,.18); }
+  @media (max-width: 1024px) { [data-ci-form-grid] { grid-template-columns: minmax(0,1fr) !important; } }
+  @media (max-width: 860px) { section { padding-top: 56px !important; padding-bottom: 56px !important; } }
+  @media (max-width: 640px) { [data-ci-grid="2"], [data-ci-grid="3"] { grid-template-columns: minmax(0,1fr) !important; } main h2 { font-size: 30px !important; } h1 { font-size: 32px !important; } [data-ci-row] { grid-template-columns: minmax(0,1fr) !important; } }
+  @media (max-width: 1100px) { [data-ci-doc] { grid-template-columns: minmax(0,1fr) !important; gap: 40px !important; } [data-ci-aside] { position: static !important; } }
+  @media (max-width: 640px) { h1 { font-size: 32px !important; } h2 { font-size: 24px !important; } }
+  [data-ci-prose] p { font-size: 19px; line-height: 1.7; color: #383A3B; text-wrap: pretty; }
+  [data-ci-prose] h2 { font-size: 30px; line-height: 1.25; font-weight: 700; margin-top: 12px; }
+  [data-ci-prose] h3 { font-size: 21px; line-height: 1.35; font-weight: 600; }
+  /* Gutenberg block-editor pages fall back to page.php, whose [data-ci-prose]
+     column is deliberately narrow (max-width:74ch) for reading comfort — but
+     that clamps .alignwide/.alignfull blocks (hero photos, card grids) that
+     are supposed to break out of it. Re-widen just those two block classes;
+     everything else in the column stays at prose width. */
+  [data-ci-prose] > .alignwide { width: 1200px; max-width: calc(100vw - 48px); margin-left: 50%; transform: translateX(-50%); }
+  [data-ci-prose] > .alignfull { width: 100vw; max-width: 100vw; margin-left: 50%; transform: translateX(-50%); }
+  /* .alignwide nested inside .alignfull (e.g. a text block over a full-bleed
+     hero photo) is already inside a full-viewport-width parent — it just
+     needs simple centering, not a second viewport-relative breakout, or the
+     two transforms stack and shove the content off-screen. */
+  [data-ci-prose] > .alignfull .alignwide { width: 100%; max-width: 1200px; margin-left: auto; margin-right: auto; transform: none; }
+  @media (max-width: 640px) { [data-ci-prose] > .alignwide, [data-ci-prose] > .alignfull { width: 100%; max-width: 100%; margin-left: 0; transform: none; } }
+  @media (max-width: 1080px) { [data-ci-article] { grid-template-columns: minmax(0,1fr) !important; } [data-ci-toc] { position: static !important; } }
+  @media (max-width: 960px) { [data-ci-split] { grid-template-columns: minmax(0,1fr) !important; gap: 40px !important; } [data-ci-grid="3"] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; } h1 { font-size: 36px !important; } }
+  @media (max-width: 640px) { [data-ci-grid="3"] { grid-template-columns: minmax(0,1fr) !important; } h1 { font-size: 30px !important; } [data-ci-prose] h2 { font-size: 26px !important; } }
+
+/* interaction states */
+[data-hv="hv-cta"]:hover{background:#8C0550}
+[data-hv]{transition:background-color .28s cubic-bezier(.22,.61,.36,1),border-color .28s cubic-bezier(.22,.61,.36,1),color .28s cubic-bezier(.22,.61,.36,1),box-shadow .28s cubic-bezier(.22,.61,.36,1)}
+[data-hv="hv12"]{position:relative}
+[data-hv="hv12"]::before{content:"";position:absolute;inset:0 auto 0 0;width:0;background:#C6093B;transition:width .28s cubic-bezier(.22,.61,.36,1)}
+[data-hv="hv12"]:hover::before{width:3px}
+a[style*="padding:14px 24px;background:#fff;color:#C6093B"]{transition:box-shadow .28s cubic-bezier(.22,.61,.36,1),transform .28s cubic-bezier(.22,.61,.36,1)}
+a[style*="padding:14px 24px;background:#fff;color:#C6093B"]:hover{box-shadow:0 8px 20px -8px rgba(0,0,0,.35);transform:translateY(-2px)}
+a[style*="padding:14px 24px;background:transparent;color:#fff"]:hover{background:rgba(255,255,255,.12);border-color:#fff}
+a[style*="justify-self:start;margin-top:4px"]{transition:background-color .28s cubic-bezier(.22,.61,.36,1)}
+a[style*="justify-self:start;margin-top:4px"]:hover{background:#8C0550}
+[data-hv="hv0"]:hover{background:#8C0550}
+[data-hv="hv1"]:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+[data-hv="hv2"]:hover{background:#8C0550}
+[data-hv="hv3"]:hover{border-color:#383A3B}
+[data-hv="hv4"]:hover{border-color:#C6093B}
+[data-ev-consent="granted"]:hover{background:#8C0550}
+[data-ev-consent="denied"]:hover{border-color:#383A3B;background:#EAEBED}
+[data-ci-journey] a:hover h3{color:#C6093B}
+a[style*="min-height:88px"]{transition:box-shadow .32s cubic-bezier(.22,.61,.36,1),border-color .32s cubic-bezier(.22,.61,.36,1),transform .32s cubic-bezier(.22,.61,.36,1)}
+a[style*="min-height:88px"]:hover{border-color:#C6093B;box-shadow:0 2px 4px rgba(56,58,59,.06),0 16px 32px -14px rgba(56,58,59,.20);transform:translateY(-2px)}
+button[onclick=""][style*="background:#C6093B"]:hover{background:#8C0550}
+button[onclick=""]{transition:background-color .28s cubic-bezier(.22,.61,.36,1),border-color .28s cubic-bezier(.22,.61,.36,1)}
+nav[aria-label="Insights pagination"] a{transition:background-color .28s cubic-bezier(.22,.61,.36,1),border-color .28s cubic-bezier(.22,.61,.36,1)}
+button[onclick=""][style*="#D8D9DB"]:hover{border-color:#C6093B;background:#EAEBED}
+nav[aria-label="Insights pagination"] a:hover{border-color:#C6093B;background:#EAEBED}
+[data-hv="hv5"]:hover{background:#EAEBED;color:#8C0550}
+[data-hv="hv6"]:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+[data-hv="hv7"]:hover{color:#fff}
+[data-hv="hv8"]:hover{background:#8C0550}
+[data-hv="hv9"]:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+[data-hv="hv10"]:hover{background:#EAEBED}
+[data-hv="hv11"]:hover{border-color:#C6093B}
+[data-hv="hv12"]:hover{background:#EAEBED;color:#8C0550}
+[data-hv="hv13"]:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+[data-hv="hv14"]:hover{background:#8C0550}
+[data-hv="hv15"]:hover{border-color:#383A3B}
+[data-hv="hv16"]:hover{background:#8C0550}
+[data-hv="hv17"]:hover{background:#EAEBED}
+[data-hv="hv18"]:hover{color:#C6093B}
+[data-hv="hv19"]:hover{color:#C6093B}
+[data-hv="hv20"]:hover{color:#C6093B}
+[data-hv="hv21"]:hover{color:#C6093B}
+[data-hv="hv22"]:hover{background:#EAEBED;color:#8C0550}
+[data-hv="hv23"]:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+[data-hv="hv24"]:hover{background:#8C0550}
+[data-hv="hv25"]:hover{border-color:#383A3B}
+[data-hv="hv26"]:hover{background:#8C0550}
+[data-hv="hv27"]:hover{color:#C6093B}
+[data-hv="hv28"]:hover{color:#C6093B}
+[data-hv="hv29"]:hover{color:#C6093B}
+[data-hv="hv30"]:hover{color:#C6093B}
+[data-hv="hv31"]:hover{background:#EAEBED;color:#8C0550}
+[data-hv="hv32"]:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+[data-hv="hv33"]:hover{background:#8C0550}
+[data-hv="hv34"]:hover{border-color:#383A3B}
+[data-hv="hv35"]:hover{background:#8C0550}
+[data-hv="hv36"]:hover{color:#C6093B}
+[data-hv="hv37"]:hover{color:#C6093B}
+[data-hv="hv38"]:hover{color:#C6093B}
+[data-hv="hv39"]:hover{color:#C6093B}
+[data-hv="hv40"]:hover{background:#EAEBED;color:#8C0550}
+[data-hv="hv41"]:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+[data-hv="hv42"]:hover{background:#8C0550}
+[data-hv="hv43"]:hover{border-color:#383A3B}
+[data-hv="hv44"]:hover{background:#8C0550}
+[data-hv="hv45"]:hover{color:#C6093B}
+[data-hv="hv46"]:hover{color:#C6093B}
+[data-hv="hv47"]:hover{color:#C6093B}
+[data-hv="hv48"]:hover{color:#C6093B}
+[data-hv="hv49"]:hover{background:#EAEBED;color:#8C0550}
+[data-hv="hv50"]:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+[data-hv="hv51"]:hover{background:#EAEBED;color:#8C0550}
+[data-hv="hv52"]:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+[data-hv="hv53"]:hover{border-color:#C6093B}
+[data-hv="hv54"]:hover{color:#C6093B}
+[data-hv="hv55"]:hover{background:#F7F7F8}
+[data-hv="hv56"]:hover{border-color:#C6093B}
+[data-hv="hv57"]:hover{background:#8C0550}
+[data-hv="hv58"]:hover{background:#EAEBED;color:#8C0550}
+[data-hv="hv59"]:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+[data-hv="hv60"]:hover{background:#8C0550}
+[data-hv="hv61"]:hover{border-color:#C6093B}
+[data-hv="hv62"]:hover{background:#EAEBED;color:#8C0550}
+[data-hv="hv63"]:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+[data-hv="hv64"]:hover{background:#8C0550}
+[data-hv="hv65"]:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+[data-hv="hv66"]:hover{background:#8C0550}
+[data-hv="hv67"]:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+[data-hv="hv68"]:hover{background:#EAEBED}
+[data-hv="hv69"]:hover{background:#8C0550}
+[data-hv="hv70"]:hover{border-color:#C6093B;color:#C6093B}
+[data-hv="hv71"]:hover{border-color:#C6093B;color:#C6093B}
+[data-hv="hv72"]:hover{border-color:#C6093B;color:#C6093B}
+[data-hv="hv73"]:hover{border-color:#C6093B;background:#C6093B;color:#fff}
+[data-hv="hv74"]:hover{color:#8C0550}
+[data-hv="hv75"]:hover{background:#C6093B;color:#fff}
+[data-hv="hv76"]:hover{background:#EAEBED;color:#8C0550}
+[data-hv="hv77"]:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+[data-hv="hv78"]:hover{background:#8C0550}
+[data-hv="hv79"]:hover{background:#8C0550}
+[data-hv="hv80"]:hover{background:#8C0550}
+[data-hv="hv81"]:hover{color:#C6093B}
+[data-hv="hv82"]:hover{background:#8C0550}
+[data-hv="hv83"]:hover{border-color:#C6093B}
+[data-hv="hv84"]:hover{background:#EAEBED;color:#8C0550}
+[data-hv="hv85"]:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+[data-hv="hv86"]:hover{color:#C6093B}
+[data-hv="hv87"]:hover{background:#8C0550}
+[data-hv="hv88"]:hover{border-color:#C6093B}
+[data-hv="hv89"]:hover{background:#EAEBED;color:#8C0550}
+[data-hv="hv90"]:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+[data-hv="hv91"]:hover{color:#C6093B}
+[data-hv="hv92"]:hover{background:#8C0550}
+[data-hv="hv93"]:hover{border-color:#C6093B}
+[data-hv="hv94"]:hover{background:#EAEBED;color:#8C0550}
+[data-hv="hv95"]:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+/* header/footer responsive */
+@media (max-width: 1180px) {
+  [data-ci-hdr] { flex-wrap: wrap; padding-top: 14px; padding-bottom: 14px; row-gap: 12px; }
+  [data-ci-nav] { flex-wrap: wrap; row-gap: 12px; width: 100%; justify-content: flex-start; }
+}
+@media (max-width: 860px) { [data-ci-footer-cols] { grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap: 32px !important; } }
+@media (max-width: 640px) { [data-ci-footer-cols] { grid-template-columns: minmax(0,1fr) !important; } }
+.screen-reader-text { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(1px,1px,1px,1px); white-space: nowrap; }
+.ev-notice { padding: 16px 18px; border-left: 3px solid #C6093B; background: #EAEBED; font-size: 17px; line-height: 1.55; }
+
+
+/* ---------------------------------------------------------------------------
+   Print. Clients do print service pages, pillar guides and articles — usually
+   to circulate inside a company. Drop the site furniture, keep the substance,
+   and print link targets so a paper copy stays usable.
+   --------------------------------------------------------------------------- */
+@media print {
+  @page { margin: 18mm 16mm; }
+
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Site furniture and anything interactive has no meaning on paper. */
+  header, footer, nav, form, #ev-consent,
+  [data-ev-filter-scope], [data-ci-cta], [data-screen-label="CTA"],
+  [data-screen-label="Subscribe"], .screen-reader-text {
+    display: none !important;
+  }
+
+  main { max-width: none !important; }
+  section { padding: 0 0 14pt !important; margin: 0 !important; break-inside: auto; }
+
+  /* Decorative gradient bars and tinted bands cost ink and say nothing. */
+  [data-ci-bar], [aria-hidden="true"] { display: none !important; }
+  [data-ci-card], article, aside, [data-screen-label] > div {
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+  [data-ci-card] { border: 1pt solid #999 !important; break-inside: avoid; }
+
+  h1 { font-size: 20pt !important; line-height: 1.2 !important; }
+  h2 { font-size: 14pt !important; line-height: 1.25 !important; break-after: avoid; }
+  h3 { font-size: 12pt !important; break-after: avoid; }
+  h1, h2, h3, h4 { color: #000 !important; }
+  p, li { orphans: 3; widows: 3; }
+
+  /* Accordions must print open — a printed FAQ with hidden answers is useless. */
+  details { display: block !important; }
+  details > summary { list-style: none; font-weight: 700; }
+  details:not([open]) > *:not(summary) { display: block !important; }
+
+  /* Sticky sidebars and tables of contents break pagination. */
+  [data-ci-toc], [data-ci-aside] { position: static !important; }
+  [data-ci-toc] { display: none !important; }
+
+  /* Grids become a single column so nothing is clipped at the page edge. */
+  [data-ci-grid], [data-ci-split], [data-ci-doc], [data-ci-journey], [data-ci-article] {
+    display: block !important;
+  }
+  [data-ci-grid] > *, [data-ci-journey] > * { margin-bottom: 10pt; }
+
+  img { max-width: 100% !important; break-inside: avoid; }
+  /* Hero photography is atmosphere, not information. */
+  [data-ci-hero-box] img, [data-screen-label="Hero"] img { display: none !important; }
+
+  /* A paper reader cannot follow a link they cannot see. */
+  main a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; color: #444; }
+  main a[href^="/"]::after { content: " (ecovislaw.vn" attr(href) ")"; font-size: 9pt; color: #444; }
+  main a[href^="#"]::after, main a[href^="mailto"]::after, main a[href^="tel"]::after { content: ""; }
+
+  /* Provenance on every printed page. */
+  main::after {
+    content: "ECOVIS Vietnam Law · vietnam@ecovislaw.vn · +84 898 120 121 · General information, not legal advice.";
+    display: block;
+    margin-top: 16pt;
+    padding-top: 8pt;
+    border-top: 1pt solid #999;
+    font-size: 9pt;
+    color: #333;
+  }
+}
+
+/*
+ * Team-member bio pages (/vu-manh-quynh/, /nguyen-nhuan/, /nguyen-hong-giang/,
+ * /christine-chou/) and similar pages on page-no-title.php are edited in the
+ * block editor as ordinary WordPress Pages, not built as PHP templates — so
+ * their markup uses loose Gutenberg classes instead of the [data-ci-*]
+ * attribute system the rest of this theme is written with. No stylesheet for
+ * those classes ever shipped (there is no "ecovis-site-core" plugin on this
+ * site, despite the image paths referencing one), so until now they rendered
+ * with zero styling: no eyebrow colour, no hero photo, no card panel, no
+ * button colour. This block gives them the same visual language as the rest
+ * of the site — same colours, the homepage's hero-photo treatment, the same
+ * card and button conventions — without touching post_content.
+ */
+/* Specificity note: [data-ci-prose] p (line 107) is an attribute+type
+   selector (0,1,1) — it beats a plain class like .ci-eyebrow (0,1,0)
+   regardless of source order, since these pages' content sits inside that
+   [data-ci-prose] wrapper. Every rule below that colours a <p> is written
+   as [data-ci-prose] .the-class so it wins on specificity, not source
+   order — future CSS added after this block can't silently break it. */
+[data-ci-prose] .ci-eyebrow { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #C6093B; margin-bottom: 14px; }
+/* "-on-dark" was written for a photo hero with a dark overlay. That hero is
+   gone (see note below) — there is no more dark background — so this just
+   resolves to the same red as the plain eyebrow instead of going invisible. */
+[data-ci-prose] .ci-eyebrow-on-dark { color: #C6093B; }
+
+.has-h-1-font-size { font-size: 44px; line-height: 1.14; font-weight: 700; letter-spacing: -.015em; }
+[data-ci-prose] .has-lead-font-size { font-size: 19px; line-height: 1.6; color: #6B6E6F; }
+.has-ecovis-red-color { color: #C6093B; }
+.has-white-background-color { background-color: #fff; }
+.has-soft-background-color { background-color: #EAEBED; }
+
+/* Plain text pagehead — deliberately NOT a full-bleed photo hero.
+   Two reasons, both learned the hard way on this same site before:
+   1. These four source photos have wildly different native framing
+      (near-square vs. tall portrait — see the team-photo-bug notes on
+      this project), so one shared background-size:cover crop puts some
+      faces off-centre or crops into a forehead/chin close-up. There is
+      no single crop that works for all four without per-photo tuning.
+   2. The firm's photography rule (2026 CI) is bright/warm/positive
+      portraits — a dark colour-overlay-on-photo hero (borrowed from the
+      homepage's cityscape treatment) reads as moody/bruised on a face,
+      which is the opposite of that rule.
+   The same photo already appears correctly composed (4:5, cover-cropped
+   by an aspect-ratio box, not a viewport-wide band) lower on this same
+   page, so nothing is lost by not repeating it here. */
+.ci-page-hero-photo { background: #EAEBED; }
+
+.ci-about-partner-photo img { width: 100%; height: auto; aspect-ratio: 4/5; object-fit: cover; object-position: 50% 20%; display: block; border-radius: 2px; filter: grayscale(1) contrast(1.05) brightness(1.02); }
+
+.ci-fact-panel { margin-top: 8px; padding: 20px 24px; border: 1px solid #E3E3E5; border-radius: 2px; background: #F7F7F8; }
+[data-ci-prose] .ci-fact-panel p { font-size: 17px; line-height: 1.6; color: #383A3B; }
+.ci-card-label { display: block; font-size: 14px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #6B6E6F; margin-bottom: 6px; }
+
+.ci-band { background: #C6093B; color: #fff; }
+.ci-band > .wp-block-group__inner-container { max-width: 1200px; margin: 0 auto; padding: 56px 24px; }
+.ci-band h2 { color: #fff; }
+[data-ci-prose] .ci-band .has-lead-font-size { color: rgba(255,255,255,.92); }
+
+.wp-block-button__link { border-radius: 2px; font-weight: 600; text-decoration: none; padding: 13px 22px; }
+.ci-band .wp-block-button__link:hover { background: #F1F1F2 !important; }
+@media (max-width: 640px) { .has-h-1-font-size { font-size: 32px !important; } }
