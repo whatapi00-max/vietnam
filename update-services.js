@@ -14,10 +14,6 @@ function* walk(dir) {
 const DOTS = ['#1F3B68', '#B08A2E', '#D2A051', '#2F5A94', '#10264A'];
 
 const CATS_EN = [
-  { h: 'Legal &amp; Compliance', page: 'services/operational-compliance-vietnam/', items: [
-    ['Business licensing', 'knowledge-hub/investment-law-vietnam/'],
-    ['Regulatory approvals', 'services/operational-compliance-vietnam/'],
-    ['Ongoing compliance', 'services/operational-compliance-vietnam/']] },
   { h: 'Investment Advisory', page: 'services/fdi-market-entry-vietnam/', items: [
     ['FDI setup &amp; support', 'services/fdi-market-entry-vietnam/'],
     ['Market entry strategy', 'services/fdi-market-entry-vietnam/'],
@@ -37,10 +33,6 @@ const CATS_EN = [
 ];
 
 const CATS_DE = [
-  { h: 'Recht &amp; Compliance', page: 'services/operational-compliance-vietnam/', items: [
-    ['Unternehmenslizenzierung', 'knowledge-hub/investment-law-vietnam/'],
-    ['Behördliche Genehmigungen', 'services/operational-compliance-vietnam/'],
-    ['Laufende Compliance', 'services/operational-compliance-vietnam/']] },
   { h: 'Investitionsberatung', page: 'services/fdi-market-entry-vietnam/', items: [
     ['FDI-Setup &amp; Begleitung', 'services/fdi-market-entry-vietnam/'],
     ['Markteintrittsstrategie', 'services/fdi-market-entry-vietnam/'],
@@ -72,18 +64,16 @@ function grid(cats, P) {
               </span>`).join('')}
             </div>
           </div>`).join('');
-  return `<div data-ci-journey="" style="position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:32px">
-        <span data-ci-journey-rail="" aria-hidden="true" style="position:absolute;left:7px;top:6px;width:calc(80% + 26px);height:2px;background:#E6E2D6"></span>${cols}
+  return `<div data-ci-journey="" style="position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px">
+        <span data-ci-journey-rail="" aria-hidden="true" style="position:absolute;left:7px;top:6px;width:calc(75% + 19px);height:2px;background:#E6E2D6"></span>${cols}
       </div>`;
 }
 
-const FOOT_EN = ['Legal &amp; Compliance|services/operational-compliance-vietnam/',
-  'Investment Advisory|services/fdi-market-entry-vietnam/',
+const FOOT_EN = ['Investment Advisory|services/fdi-market-entry-vietnam/',
   'Accounting &amp; Tax Services|services/operational-compliance-vietnam/',
   'Corporate Services|services/corporate-transactions-vietnam/',
   'M&amp;A &amp; Transactions|services/corporate-transactions-vietnam/'];
-const FOOT_DE = ['Recht &amp; Compliance|services/operational-compliance-vietnam/',
-  'Investitionsberatung|services/fdi-market-entry-vietnam/',
+const FOOT_DE = ['Investitionsberatung|services/fdi-market-entry-vietnam/',
   'Buchhaltung &amp; Steuern|services/operational-compliance-vietnam/',
   'Corporate Services|services/corporate-transactions-vietnam/',
   'M&amp;A &amp; Transaktionen|services/corporate-transactions-vietnam/'];

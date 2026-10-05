@@ -317,6 +317,8 @@ async function downloadAssets() {
   require('./update-services.js');
   // remove German-language content + lawyer profile references
   require('./cleanup-de-lawyers.js');
-  // rebuild /services/ around the five TTH categories
+  // rebuild /services/ around the four TTH categories
   require('./fix-services-page.js');
+  // TTH pass: remove lawyer photos, German relations, ECOVIS claims
+  require('./cleanup-tth.js');
 })();

@@ -6,8 +6,6 @@ let h = fs.readFileSync(F, 'utf8');
 const P = '../../';
 
 const CARDS = [
-  { h: 'Legal &amp; Compliance', d: 'Licences, approvals and ongoing compliance so the company stays in good standing.',
-    link: 'services/operational-compliance-vietnam/', items: ['Business licensing', 'Regulatory approvals', 'Ongoing compliance'] },
   { h: 'Investment Advisory', d: 'FDI setup, market-entry strategy and business development for entering Vietnam.',
     link: 'services/fdi-market-entry-vietnam/', items: ['FDI setup &amp; support', 'Market entry strategy', 'Business development'] },
   { h: 'Accounting &amp; Tax Services', d: 'Bookkeeping, reporting and tax compliance — VAT, CIT, PIT and payroll.',
@@ -19,9 +17,6 @@ const CARDS = [
 ];
 
 const DIRECTORY = [
-  ['Business licensing', 'knowledge-hub/investment-law-vietnam/'],
-  ['Regulatory approvals', 'services/operational-compliance-vietnam/'],
-  ['Ongoing compliance', 'services/operational-compliance-vietnam/'],
   ['FDI setup &amp; support', 'services/fdi-market-entry-vietnam/'],
   ['Market entry strategy', 'services/fdi-market-entry-vietnam/'],
   ['Business development', 'business-advisory-desk/'],
@@ -73,21 +68,11 @@ function swapGrid(h, label, gridAttr, newGrid) {
 h = swapGrid(h, 'Practices', '3', practicesGrid);
 h = swapGrid(h, 'Directory', '2', dirGrid);
 
-// filler cell: odd item count leaves an empty grid slot -> contact CTA
-const filler = `<a href="${P}contact/index.html" style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#F3F1E8;padding:18px 24px;text-decoration:none;color:#383A3B;font-size:16px;font-weight:500" data-hv="hv12">
-          Something else? Describe your matter          <span aria-hidden="true" style="flex:0 0 auto;color:#B08A2E">→</span>
-        </a>`;
-{
-  const s = h.indexOf('data-screen-label="Directory"');
-  const e = h.indexOf('</section>', s);
-  const ins = h.lastIndexOf('</div>', e);
-  h = h.slice(0, ins) + filler + '\n    ' + h.slice(ins);
-}
-
 h = h.replace('>Practice groups', '>Our services')
      .replace('What we are engaged for, most often', 'Comprehensive Business Solutions in Vietnam')
      .replace('>Full directory', '>Services A to Z')
-     .replace('All 17 service lines, A to Z', 'Five practices, fifteen services');
+     .replace('All 17 service lines, A to Z', 'Four practices, twelve services')
+     .replace('Five practices, fifteen services', 'Four practices, twelve services');
 
 fs.writeFileSync(F, h, 'utf8');
 console.log('services page rebuilt');
