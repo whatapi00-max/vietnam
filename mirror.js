@@ -134,12 +134,12 @@ function transformBody(src) {
 
 // ---- Vietoria rebrand (applied to every generated page) ----
 function rebrand(html) {
-  html = html.replace(/(rel="icon"[^>]*href="(?:\.\.\/)*\/?assets\/img\/)ecovis-logo-red\.png/g, '$1vietoria-mark.png');
+  html = html.replace(/(rel="icon"[^>]*href="(?:\.\.\/)*\/?assets\/img\/)ecovis-logo-red\.png/g, '$1tth-mark.png');
   html = html.replace(/<img src="((?:\.\.\/)*\/?assets\/img\/)ecovis-logo-red\.png"[^>]*>/g,
-    '<img src="$1vietoria-logo.png" alt="Vietoria" style="height:40px;width:auto;display:block">');
+    '<img src="$1tth-logo.png" alt="Vietoria" style="height:40px;width:auto;display:block">');
   html = html.replace(/<span style="font-size:19px;font-weight:400;color:#6B6E6F;padding-left:14px;border-left:1px solid #E3E3E5;white-space:nowrap">Vietnam Law<\/span>/g, '');
   html = html.replace(/<img src="((?:\.\.\/)*\/?assets\/img\/)ecovis-logo-white\.png"[^>]*>/g,
-    '<span style="display:inline-flex;background:#fff;border-radius:4px;padding:9px 14px"><img src="$1vietoria-logo.png" alt="Vietoria" style="height:30px;width:auto;display:block"></span>');
+    '<span style="display:inline-flex;background:#fff;border-radius:4px;padding:9px 14px"><img src="$1tth-logo.png" alt="Vietoria" style="height:30px;width:auto;display:block"></span>');
   html = html.replace(/<span style="font-size:16px;font-weight:400;color:rgba\(255,255,255,\.9\);padding-left:12px;border-left:1px solid rgba\(255,255,255,\.28\);white-space:nowrap">Vietnam Law<\/span>/g, '');
   html = html.replace(/ECOVIS Vietnam Law/g, 'Vietoria');
   html = html.replace(/ECOVIS Vietnam/g, 'Vietoria');
@@ -211,7 +211,7 @@ function pageHtml(lang, title, desc, body) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${rebrand(title || 'Vietoria')}</title>
-${desc ? `<meta name="description" content="${rebrand(desc)}">\n` : ''}<link rel="icon" type="image/png" href="/assets/img/vietoria-mark.png">
+${desc ? `<meta name="description" content="${rebrand(desc)}">\n` : ''}<link rel="icon" type="image/png" href="/assets/img/tth-mark.png">
 <link rel="stylesheet" href="/assets/css/theme.css">
 <style>
 /* Scriptless mobile nav: hidden checkbox + label toggle. No JavaScript anywhere. */
