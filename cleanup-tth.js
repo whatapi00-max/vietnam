@@ -278,7 +278,8 @@ function cleanHtml(h, rel) {
   h = h.replace(/For German and other European investors/g, 'For international investors');
 
   // --- remove office address ---
-  h = h.replace(/<p[^>]*>The Sun Avenue, Tower 1, Unit SAV1\.02\.11<br>28 Mai Chi Tho Street, Binh Trung Ward<br>Ho Chi Minh City, Vietnam<\/p>/g, '');
+  h = h.replace(/<p[^>]*>The Sun Avenue, Tower 1, Unit SAV1\.02\.11<br>28 Mai Chi Tho Street, Binh Trung Ward<br>Ho Chi Minh City, Vietnam<\/p>/g,
+    '<p style="font-size:16px;line-height:1.6;color:rgba(255,255,255,.84)">Ho Chi Minh City, Vietnam</p>');
   h = h.replace(/Unit SAV1\.02\.11, Tower 1, The Sun Avenue, 28 Mai Chi Tho Street, Binh Trung Ward, Ho Chi Minh City(, Vietnam)?/g, 'Ho Chi Minh City, Vietnam');
   h = h.replace(/— Ho Chi Minh City, Vietnam\./g, 'in Ho Chi Minh City, Vietnam.');
   h = h.replace(/, Ho Chi Minh City, Vietnam, Ho Chi Minh City/g, ', Ho Chi Minh City');
@@ -288,9 +289,11 @@ function cleanHtml(h, rel) {
 
   // --- new contact email ---
   h = h.replace(/vietoriabusinessservices@gmail\.com/g, 'tthservices.info@gmail.com');
-  // contact page Office block (address + map link)
+  // contact page Office block (address + map link); show city under hours instead
   if (/contact[\/\\]index\.html$/.test(rel)) {
     h = h.replace(/<div style="display:grid;gap:14px">\s*<p[^>]*>Office<\/p>[\s\S]*?<\/div>/, '');
+    h = h.replace(/(Monday–Friday, 08:30–18:00 ICT \(GMT\+7\)\.?)<\/p>/,
+      '$1<br>Ho Chi Minh City, Vietnam</p>');
   }
   return h;
 }
