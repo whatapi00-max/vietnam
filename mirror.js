@@ -321,4 +321,6 @@ async function downloadAssets() {
   require('./fix-services-page.js');
   // TTH pass: remove lawyer photos, German relations, ECOVIS claims
   require('./cleanup-tth.js');
+  // visual redesign: petrol/gold palette, serif headings, pill buttons
+  require('./redesign.js');
 })();
