@@ -323,4 +323,6 @@ async function downloadAssets() {
   require('./cleanup-tth.js');
   // visual redesign: petrol/gold palette, serif headings, pill buttons
   require('./redesign.js');
+  // place TTH-branded photos across the site
+  require('./add-photos.js');
 })();
