@@ -325,4 +325,6 @@ async function downloadAssets() {
   require('./redesign.js');
   // place TTH-branded photos across the site
   require('./add-photos.js');
+  // wire all forms to web3forms
+  require('./web3forms.js');
 })();
