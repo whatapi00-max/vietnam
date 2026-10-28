@@ -296,11 +296,11 @@ function cleanHtml(h, rel) {
   // --- add two hotline numbers alongside the main phone ---
   if (!h.includes('tel:+84941573909')) {
     h = h.replace(/tel:\+84394430730" style="color:#fff;text-decoration:none">\+84 394 430 730<\/a>/g,
-      'tel:+84394430730" style="color:#fff;text-decoration:none">+84 394 430 730</a><br><span style="color:rgba(255,255,255,.55);font-size:14px">Hotline:</span> <a href="tel:+84941573909" style="color:#fff;text-decoration:none">+84 941 573 909</a> · <a href="tel:+84944345548" style="color:#fff;text-decoration:none">+84 944 345 548</a>');
+      'tel:+84394430730" style="color:#fff;text-decoration:none">+84 394 430 730</a><br><span style="color:rgba(255,255,255,.55);font-size:14px">Hotline:</span> <a href="tel:+84941573909" style="color:#fff;text-decoration:none">+84 941 573 909</a>');
     h = h.replace(/tel:\+84394430730" style="font-size:17px;color:#[0-9A-Fa-f]{6};text-decoration:none">\+84 394 430 730<\/a>/g,
-      'tel:+84394430730" style="font-size:17px;color:#2E3A3B;text-decoration:none">+84 394 430 730</a><br><span style="font-size:14px;color:#5C6567">Hotline:</span> <a href="tel:+84941573909" style="font-size:17px;color:#2E3A3B;text-decoration:none">+84 941 573 909</a> · <a href="tel:+84944345548" style="font-size:17px;color:#2E3A3B;text-decoration:none">+84 944 345 548</a>');
+      'tel:+84394430730" style="font-size:17px;color:#2E3A3B;text-decoration:none">+84 394 430 730</a><br><span style="font-size:14px;color:#5C6567">Hotline:</span> <a href="tel:+84941573909" style="font-size:17px;color:#2E3A3B;text-decoration:none">+84 941 573 909</a>');
     h = h.replace(/tel:\+84394430730" style="text-decoration:none;color:#[0-9A-Fa-f]{6}">\+84 394 430 730<\/a>/g,
-      'tel:+84394430730" style="text-decoration:none;color:#2E3A3B">+84 394 430 730</a><br><a href="tel:+84941573909" style="text-decoration:none;color:#2E3A3B">+84 941 573 909</a> · <a href="tel:+84944345548" style="text-decoration:none;color:#2E3A3B">+84 944 345 548</a>');
+      'tel:+84394430730" style="text-decoration:none;color:#2E3A3B">+84 394 430 730</a><br><a href="tel:+84941573909" style="text-decoration:none;color:#2E3A3B">+84 941 573 909</a>');
   }
 
   // --- new contact email ---
